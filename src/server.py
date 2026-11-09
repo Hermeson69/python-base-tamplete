@@ -1,11 +1,13 @@
-from fastapi import FastAPI
+import asyncio
+
 import uvicorn
+from .core.config import validate_env
 
-app = FastAPI()
 
-@app.get("/")
-async def read_root():
-    return {"Hello": "World"}
 
-if __name__ == "__main__":
-    uvicorn.run("server:app", app_dir="src", reload=True)
+def run() -> None:
+    loop = asyncio.get_event_loop()
+    loop.close()
+    uvicorn.run("src.api:app", host="0.0.0.0", port=8080, log_level="info")
+
+
